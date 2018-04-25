@@ -2,7 +2,7 @@ import scala.xml._
 
 
 
-val doc = XML.loadFile("C:\\Users\\ibm\\Desktop\\projects\\scalatest\\data\\173193_2018.xml")
+val doc = XML.loadFile("C:\\Users\\ibm\\Desktop\\projects\\scalatest\\data\\173277_2018.xml")
 
 
 
@@ -22,12 +22,24 @@ for {//popraw ta petle
 }
 
   println(s"Grand total " + total)
-println(counter)
-println(total/counter)
+if(counter>0){
+  println(counter)
+  println(total/counter)
+} else {
+
+}
+val contract = doc \ "FORM_SECTION" \ "F03_2014"   \ "AWARD_CONTRACT"
+for{
+  awContract <- contract \ "AWARDED_CONTRACT"
+  low <- awContract \ "VAL_RANGE_TOTAL" \ "LOW"
+  high <- awContract \ "VAL_RANGE_TOTAL" \ "HIGH"
+} yield {
+  println("LOW:" + low.text +" HIGH:" + high.text)
+}
+
 
 
 val uriList = doc \ "CODED_DATA_SECTION" \ "NOTICE_DATA" \ "URI_LIST"
-
 for {
   uriDoc  <- uriList \ "URI_DOC"
 } yield {
