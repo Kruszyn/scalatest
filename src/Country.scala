@@ -1,16 +1,15 @@
-/**
-  * Created by ibm on 2018-04-25.
-  */
-class Country(val name: String, val countryTag: String, var counter: Int = 0, var total: BigDecimal = 0){
+import scala.math.BigDecimal
+
+class Country(val name: String, val countryTag: String, var counter: Int = 0, var total: Double = 0){
 
   def  calcAvgContractValue(): BigDecimal ={
     if(counter>0){
-      total/counter
+     BigDecimal(total/counter).setScale(2, BigDecimal.RoundingMode.HALF_UP)
     } else {
       0
     }
   }
 
-  override def toString: String = name + " " + countryTag + " contracts count: " + counter + " avg. contract value: " + calcAvgContractValue().toString()
+  override def toString: String = name + " " + countryTag + " contracts count: " + counter + " avg. contract value: " + calcAvgContractValue().toString
 
 }
