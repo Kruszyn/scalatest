@@ -1,9 +1,11 @@
-/**
-  * Created by ibm on 2018-04-25.
-  */
+import java.io.File
+
+import scala.xml.XML
+
 object Main {
   def main(args: Array[String]): Unit = {
 
+    //Jeszcze aktualna lista krajow UE
     val list = List(
       new Country("Belgium","BE"),
       new Country("Bulgaria","BG"),
@@ -35,7 +37,31 @@ object Main {
       new Country("United Kingdom","UK")
     )
 
+    //TODO podawanie ścieżki przez użytkownika
+    val path = "C:/Data"
+    val filesHomeDir = new File(path).listFiles
+
+    // Pętla przechodząca po wszystkich folderach
+    for(fileFolder <- filesHomeDir){
+      println(fileFolder)
+
+      val filesList = fileFolder.listFiles
+
+      // Iteracja po wszystkich plikach w folderze
+      for(file <- filesList){
+        processFile(file.toString)
+      }
+
+    }
+  }
+
+  def processFile(xmlFilePath: String): Unit = {
+
+    val xml = XML.loadFile(xmlFilePath)
+
 
 
   }
+
+
 }

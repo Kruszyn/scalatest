@@ -9,7 +9,7 @@ object XMLfun {
   def main(args: Array[String]): Unit = {
     val doc = XML.loadFile("C:\\Users\\ibm\\Desktop\\projects\\scalatest\\data\\173277_2018.xml")
 
-    var total = BigDecimal(0).setScale(2, scala.math.BigDecimal.RoundingMode.HALF_UP)
+    var total = BigDecimal(0)
     var counter = 0
 
     for {//popraw ta petle
