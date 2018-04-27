@@ -13,7 +13,7 @@ object Main {
     new Country("Germany", "DE"),
     new Country("Estonia","EE"),
     new Country("Ireland","IE"),
-    new Country("Greece","EL"),
+    new Country("Greece","GR"),
     new Country("Spain","ES"),
     new Country("France","FR"),
     new Country("Croatia","HR"),
@@ -26,7 +26,7 @@ object Main {
     new Country("Malta","MT"),
     new Country("Netherlands","NL"),
     new Country("Austria","AT"),
-    new Country("Poland", "PL"),
+    new Country("Polband", "PL"),
     new Country("Portugal","PT"),
     new Country("Romania","RO"),
     new Country("Slovenia","SI"),
@@ -38,10 +38,6 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    //Jeszcze aktualna lista krajow UE
-
-
-    //TODO podawanie ścieżki przez użytkownika
     val path = "C:/Data"
     val filesHomeDir = new File(path).listFiles
     var fileCount = 0
@@ -59,7 +55,6 @@ object Main {
       }
     }
 
-    //println(list.toString)
     for(x <- list){
       println(x.toString)
     }
@@ -69,11 +64,14 @@ object Main {
 
   }
 
+
+
   def processFile(xmlFilePath: String): Unit = {
 
     val xml = XML.loadFile(xmlFilePath)
     //FIND COUNTRY TAG IN XML STRUCTURE
     val contractCountryTag = xml \ "CODED_DATA_SECTION" \ "NOTICE_DATA" \ "ISO_COUNTRY" \@ "VALUE"
+    //FIND CONTRACT VALUE IN XML STRUCTURE
     val contractValue = xml \ "CODED_DATA_SECTION" \ "NOTICE_DATA" \ "VALUES" \ "VALUE"
 
 
@@ -81,8 +79,13 @@ object Main {
       val index = list.indexWhere{x => x.countryTag == contractCountryTag}
 
       if(index>=0){
-        list(index).counter+=1
-        list(index).total+=contractValue.text.toDouble
+
+        try{
+          list(index).total+=contractValue.text.toDouble
+          list(index).counter+=1
+        } catch {
+          case e: NumberFormatException => None
+        }
       }
     }
 

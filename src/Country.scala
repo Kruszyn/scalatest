@@ -10,6 +10,6 @@ class Country(val name: String, val countryTag: String, var counter: Int = 0, va
     }
   }
 
-  override def toString: String = name + " " + countryTag + " contracts count: " + counter + " avg. contract value: " + calcAvgContractValue().toString
+  override def toString: String = name + " " + countryTag + " contracts count: " + Console.BLUE  + counter + Console.RESET + " avg. contract value: " + Console.YELLOW + calcAvgContractValue().toString + Console.RESET
 
 }
