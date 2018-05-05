@@ -26,7 +26,7 @@ object Main {
     new Country("Malta","MT"),
     new Country("Netherlands","NL"),
     new Country("Austria","AT"),
-    new Country("Polband", "PL"),
+    new Country("Poland", "PL"),
     new Country("Portugal","PT"),
     new Country("Romania","RO"),
     new Country("Slovenia","SI"),
@@ -41,7 +41,6 @@ object Main {
     val path = "C:/Data"
     val filesHomeDir = new File(path).listFiles
     var fileCount = 0
-    var contractCount = 0
     // Pętla przechodząca po wszystkich folderach
     for(fileFolder <- filesHomeDir){
       println("Loading folder:" + fileFolder)
@@ -69,17 +68,20 @@ object Main {
   def processFile(xmlFilePath: String): Unit = {
 
     val xml = XML.loadFile(xmlFilePath)
+
     //FIND COUNTRY TAG IN XML STRUCTURE
     val contractCountryTag = xml \ "CODED_DATA_SECTION" \ "NOTICE_DATA" \ "ISO_COUNTRY" \@ "VALUE"
     //FIND CONTRACT VALUE IN XML STRUCTURE
-    val contractValue = xml \ "CODED_DATA_SECTION" \ "NOTICE_DATA" \ "VALUES" \ "VALUE"
+    val contractValues = xml \ "CODED_DATA_SECTION" \ "NOTICE_DATA" \ "VALUES" \ "VALUE"
 
 
-    if(contractCountryTag.nonEmpty && contractValue.nonEmpty) {
+    if(contractCountryTag.nonEmpty && contractValues.nonEmpty) {
+      //.head take only estimated value of contract
+      val contractValue = contractValues.head
+
       val index = list.indexWhere{x => x.countryTag == contractCountryTag}
 
       if(index>=0){
-
         try{
           list(index).total+=contractValue.text.toDouble
           list(index).counter+=1
